@@ -19,23 +19,28 @@ export const ActionCreators = {
 const expensesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_EXPENSES:
-        return { ...state, expenses: [...action.payload] };
+      return { ...state, expenses: [...action.payload] };
+    
     case ActionTypes.NEW_EXPENSE:
-        return { ...state, expenses: [action.payload, ...state.expenses] };
+      return { ...state, expenses: [action.payload, ...state.expenses] };
+    
     case ActionTypes.EDIT_EXPENSE:
-        var expenses = state.expenses.map(expense => {
-          if (expense.id === action.payload.id) {
-              expense = action.payload;  
-          }
-          return expense;
-        })
-        return { ...state, expenses: [...expenses] };
+      var updatedExpenses = state.expenses.map(expense => {
+        if (expense.id === action.payload.id) {
+          expense = action.payload;
+        }
+        return expense;
+      });
+      return { ...state, expenses: [...updatedExpenses] };
+    
     case ActionTypes.DELETE_EXPENSE:
-        var expenses = state.expenses.filter(expense =>
-            expense.id !== action.payload.id);
-        return { ...state, expenses: [...expenses] };
+      var filteredExpenses = state.expenses.filter(expense => 
+        expense.id !== action.payload.id
+      );
+      return { ...state, expenses: [...filteredExpenses] };
+    
     default:
-        return state;
+      return state;
   }
 };
 
