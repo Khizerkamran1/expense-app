@@ -1,6 +1,6 @@
 import { ActionCreators } from '../app/expensesReducer';
 
-// const API_BASE_URL = '';
+const API_BASE_URL = 'https://expenses-backend-khizer.azurewebsites.net/api';
 
 // Helper function to get authentication token
 const getAuthToken = async (instance, accounts) => {
