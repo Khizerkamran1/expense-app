@@ -29,7 +29,7 @@ const getAuthToken = async (instance, accounts) => {
   }
 };
 
-export const getExpenses = async (dispatch, msalInstance, accounts) => {
+export const GetExpenses = async (dispatch, msalInstance, accounts) => {
   try {
     console.log("Starting GetExpenses with authentication...");
     
