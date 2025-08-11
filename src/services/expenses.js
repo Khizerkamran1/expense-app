@@ -29,20 +29,20 @@ const getAuthToken = async (instance, accounts) => {
   }
 };
 
-export const GetExpenses = async (dispatch, msalInstance, accounts) => {
+export const getExpenses = async (dispatch, msalInstance, accounts) => {
   try {
     console.log("Starting GetExpenses with authentication...");
     
     const token = await getAuthToken(msalInstance, accounts);
     
-    const response = await fetch('/Expenses', {
+    const response = await fetch(`${API_BASE_URL}/Expenses`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       console.log("GetExpenses SUCCESS (authenticated):", data);
@@ -51,7 +51,7 @@ export const GetExpenses = async (dispatch, msalInstance, accounts) => {
       console.log("GetExpenses FAILED:", response.status);
     }
   } catch (error) {
-    console.log('GetExpenses ERROR:', error);
+    console.log("GetExpenses ERROR:", error);
   }
 };
 
@@ -59,11 +59,11 @@ export const NewExpense = async (dispatch, expense, msalInstance, accounts) => {
   try {
     const token = await getAuthToken(msalInstance, accounts);
     
-    const response = await fetch('/Expenses', {
+    const response = await fetch(`${API_BASE_URL}/Expenses`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         description: expense.description,
@@ -71,13 +71,13 @@ export const NewExpense = async (dispatch, expense, msalInstance, accounts) => {
         date: new Date().toISOString()
       })
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       dispatch(ActionCreators.newExpense(data));
     }
   } catch (error) {
-    console.log('NewExpense Error:', error);
+    console.log("NewExpense Error:", error);
   }
 };
 
@@ -85,21 +85,21 @@ export const EditExpense = async (dispatch, expense, msalInstance, accounts) => 
   try {
     const token = await getAuthToken(msalInstance, accounts);
     
-    const response = await fetch('/Expenses', {
+    const response = await fetch(`${API_BASE_URL}/Expenses`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(expense)
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       dispatch(ActionCreators.editExpense(data));
     }
   } catch (error) {
-    console.log('EditExpense Error:', error);
+    console.log("EditExpense Error:", error);
   }
 };
 
@@ -107,18 +107,18 @@ export const DeleteExpense = async (dispatch, expense, msalInstance, accounts) =
   try {
     const token = await getAuthToken(msalInstance, accounts);
     
-    const response = await fetch(`/Expenses/${expense.id}`, {
+    const response = await fetch(`${API_BASE_URL}/Expenses/${expense.id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       }
     });
-    
+
     if (response.ok) {
       dispatch(ActionCreators.deleteExpense(expense));
     }
   } catch (error) {
-    console.log('DeleteExpense Error:', error);
+    console.log("DeleteExpense Error:", error);
   }
 };
